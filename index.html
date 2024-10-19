@@ -291,8 +291,8 @@ document.getElementById('backblack').addEventListener('change', function() {
     if (this.checked) {
         // チェックされたとき、baseAddressから0xf8を引いた値を0にする
         if (baseAddress !== null) {
-            const black = (parseInt(baseAddress, 16) - 0xf8).toString(16);
-            const black2 = (parseInt(baseAddress, 16) - 0xe8).toString(16);
+            const black = (parseInt(baseAddress, 16) - 0x150).toString(16);
+            const black2 = (parseInt(baseAddress, 16) - 0x140).toString(16);
 
             // フリーズを開始
             freezeLocker = setInterval(function() {
