@@ -339,7 +339,7 @@ function zoome() {
     let baseAddressNum = parseInt(baseAddress, 16);
     
     // baseAddressから0x168を引き算してzoomを計算
-    let zoom = baseAddressNum - 0x168;
+    let zoom = baseAddressNum - 0xa0;
 
     // zoomがNaNでないかをチェック
     if (!isNaN(zoom)) {
