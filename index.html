@@ -167,8 +167,8 @@ Once you play AI or online, click the button in play or on the Home Screen
             No boost effect(online only)
         </label>
         <label class="checkboxItem">
-            <input type="checkbox" name="checkbox" value="選択肢3" class="checkbox" />
-            null
+            <input type="checkbox" name="checkbox" id="smallfood" value="選択肢3" class="checkbox" />
+            Small food
         </label>
                 <label class="checkboxItem">
             <input type="checkbox" name="checkbox" value="選択肢4" class="checkbox" />
@@ -313,7 +313,7 @@ document.getElementById('NoEffect').addEventListener('change', function() {
     if (this.checked) {
         // チェックされたとき、baseAddressから0x140を引いた値を22にする
         if (baseAddress !== null) {
-            const effect = (parseInt(baseAddress, 16) - 0x1b8).toString(16);
+            const effect = (parseInt(baseAddress, 16) - 0x1c8).toString(16);
             // フリーズを開始
             effectLocker = setInterval(function() {
                 
@@ -325,8 +325,30 @@ document.getElementById('NoEffect').addEventListener('change', function() {
         if (effectLocker !== null) {
             clearInterval(effectLocker);
             effectLocker = null; // フリーズロッカーをリセット
-            const effect = (parseInt(baseAddress, 16) - 0x140).toString(16);
+            const effect = (parseInt(baseAddress, 16) - 0x1c8).toString(16);
             h5gg.setValue('0x' + effect, 5.39, 'F64');
+        }
+    }
+});
+
+document.getElementById('smallfood').addEventListener('change', function() {
+    if (this.checked) {
+        // チェックされたとき、baseAddressから0x140を引いた値を22にする
+        if (baseAddress !== null) {
+            const small = (parseInt(baseAddress, 16) - 0x250).toString(16);
+            // フリーズを開始
+            smallLocker = setInterval(function() {
+                
+                h5gg.setValue('0x' + small, 0.70, 'F64');
+            }, 10); // 250msごとに値を更新
+        }
+    } else {
+        // チェックが外れた場合、フリーズロックをクリア
+        if (smallLocker !== null) {
+            clearInterval(smallLocker);
+            smallLocker = null; // フリーズロッカーをリセット
+            const small = (parseInt(baseAddress, 16) - 0x250).toString(16);
+            h5gg.setValue('0x' + small, 2.74, 'F64');
         }
     }
 });
