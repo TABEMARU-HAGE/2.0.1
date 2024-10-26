@@ -150,6 +150,7 @@ Once you play AI or online, click the button in play or on the Home Screen
     <div class="titlebar" id="titlebar">
         <div id="ttt" onclick="openwindow()">&nbsp;☀ Slither.io <span id="realtime"></span></div>
     </div>
+    <input type="range" name="range" value="0.70" min="0.01" max="1.0" step="0.01" id="zzomsec" class="inputRange" style="display: none; margin-top: 17px; width: 215px;"/>
 
     <div id="content" class="content scrollable">
         <div class="intro">ModMenu by Tabemaru</div>
@@ -175,21 +176,25 @@ Once you play AI or online, click the button in play or on the Home Screen
             Big name
         </label>
         <hr>
+    <a style="font-size: 13px">Display the document under the titlebar</a>
+         <label class="checkboxItem">
+            <input type="checkbox" name="checkbox" id="zoomwhere" value="選択肢4" class="checkbox" />
+            Zoom
+        </label>
+   
+        <hr>
         <label class="checkboxItem">
             <input type="checkbox" id="zoomCheckbox" class="checkbox" onchange="toggleSlider()" />
             <span style="line-height: 20px;">Zoom</span>
         </label>
         <input type="range" name="range" value="0.70" min="0.01" max="1.0" step="0.01" id="zzom" class="inputRange" disabled />
-       <label class="checkboxItem">
-            <input type="checkbox" id="speedCheckbox" class="checkbox" onchange="toggleSlider2()" />
-            <span style="line-height: 20px;">Speed</span>
-        </label>
-        <input type="range" name="range" value="1" min="0.1" max="5.0" step="0.1" id="spped" class="inputRange" disabled />
+      
     </div>
 
     <script>
 let baseAddress = null; // baseAddress の初期値
 let zoomLocker = null; // ズーム用のロック用変数
+let zoom2Locker = null; // ズーム用のロック用変数
 let speedLocker = null; // スピード用のロック用変数
 let freezeLocker = null; // フリーズ用のロック用変数
 let effectLocker = null; // フリーズ用のロック用変数
@@ -219,7 +224,7 @@ function openwindow() {
     content.style.display = isVisible ? 'none' : 'block'; // コンテンツをトグル
 
     // ウィンドウの開閉に応じてウィンドウサイズを変更
-    setWindowRect(500, 60, 300, isVisible ? 30 : 185);
+    setWindowRect(500, 60, 300, isVisible ? 80 : 185);
 }
 
 // 初回ロード時にリアルタイムの時刻表示を開始
@@ -280,7 +285,7 @@ function startExecution() {
     if (baseAddress) {
         document.querySelector('.start-button').style.display = 'none';
                 document.querySelector('.farstcontent').style.display = 'none';
-        setWindowRect(500, 60, 300, 185);
+        setWindowRect(500, 60, 300, 215);
         setWindowDrag(0, 0, 300, 25);
     }
 }
@@ -339,7 +344,7 @@ document.getElementById('smallfood').addEventListener('change', function() {
             smallLocker = setInterval(function() {
                 
                 h5gg.setValue('0x' + small, 0.70, 'F64');
-            }, 10); // 250msごとに値を更新
+            }, 1); // 250msごとに値を更新
         }
     } else {
         // チェックが外れた場合、フリーズロックをクリア
@@ -373,6 +378,35 @@ document.getElementById('bigname').addEventListener('change', function() {
         }
     }
 });
+
+document.getElementById('zoomwhere').addEventListener('change', function() {
+    const zzom2 = document.getElementById('zzomsec');
+    // チェックボックスの状態に応じて、zzom2の表示・非表示を切り替える
+    zzom2.style.display = this.checked ? 'inline-block' : 'none';
+});
+
+function zoome2() {
+        let slidersec = parseFloat(document.getElementById("zzomsec").value);
+    
+    // baseAddressが文字列である場合を考慮し、16進数の数値に変換する
+    let baseAddressNum = parseInt(baseAddress, 16);
+    
+    // baseAddressから0x168を引き算してzoomを計算
+    let zoom = baseAddressNum - 0x260;
+
+    // zoomがNaNでないかをチェック
+    if (!isNaN(zoom)) {
+        // ズームインターバルが既に存在する場合、クリアして再設定する
+        if (zoom2Locker !== null) {
+            clearInterval(zoom2Locker);
+        }
+
+        // スライダーの値をメモリアドレスに定期的に書き込む
+        zoom2Locker = setInterval(function() {
+            h5gg.setValue("0x" + (zoom).toString(16), slidersec, 'F64');
+        }, 1);  // 1msごとに値を更新
+    }
+}
 
 // ズーム機能
 function zoome() {
@@ -446,10 +480,11 @@ function hide() {
 }
 
 // 初期設定
-setWindowRect(500, 60, 300, 185);
+setWindowRect(500, 60, 300, 215);
 setWindowDrag(0, 0, 300, 25);
 
 // イベントリスナーの設定
+document.getElementById('zzomsec').addEventListener('input', zoome2);
 document.getElementById('zzom').addEventListener('input', zoome);
 document.getElementById('spped').addEventListener('input', speede);
 document.getElementById('zoomCheckbox').addEventListener('change', toggleSlider);
