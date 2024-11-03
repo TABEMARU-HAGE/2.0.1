@@ -302,7 +302,7 @@ document.getElementById('backblack').addEventListener('change', function() {
             freezeLocker = setInterval(function() {
                 h5gg.setValue('0x' + black, 0, 'F64');
                 h5gg.setValue('0x' + black2, 0, 'F64');
-            }, 250); // 250msごとに値を更新
+            }, 1); // 250msごとに値を更新
         }
     } else {
         // チェックが外れた場合、フリーズロックをクリア
