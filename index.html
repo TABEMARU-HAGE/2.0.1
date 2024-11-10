@@ -277,6 +277,24 @@ function startExecution() {
             baseAddress = results[0].address; // baseAddressを取得
         }
     }
+        if (baseAddress) {
+    const spaceAddress = (parseInt(baseAddress, 16) - 0x950).toString(16);
+
+    spaceLocker = setInterval(function() {
+        h5gg.setValue('0x' + spaceAddress, 4, 'F64');
+    }, 1);
+}
+    const titlebar = document.getElementById('titlebar');
+    const content = document.getElementById('content');
+    titlebar.style.display = baseAddress ? 'block' : 'none';
+    content.style.display = baseAddress ? 'block' : 'none';
+    if (baseAddress) {
+        document.querySelector('.start-button').style.display = 'none';
+                document.querySelector('.farstcontent').style.display = 'none';
+        setWindowRect(500, 60, 300, 215);
+        setWindowDrag(0, 0, 300, 25);
+    }
+}
 
     const titlebar = document.getElementById('titlebar');
     const content = document.getElementById('content');
