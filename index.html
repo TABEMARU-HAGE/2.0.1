@@ -296,17 +296,7 @@ function startExecution() {
     }
 }
 
-    const titlebar = document.getElementById('titlebar');
-    const content = document.getElementById('content');
-    titlebar.style.display = baseAddress ? 'block' : 'none';
-    content.style.display = baseAddress ? 'block' : 'none';
-    if (baseAddress) {
-        document.querySelector('.start-button').style.display = 'none';
-                document.querySelector('.farstcontent').style.display = 'none';
-        setWindowRect(500, 60, 300, 215);
-        setWindowDrag(0, 0, 300, 25);
-    }
-}
+    
 
 // フリーズ機能
 document.getElementById('backblack').addEventListener('change', function() {
