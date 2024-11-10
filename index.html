@@ -281,7 +281,7 @@ function startExecution() {
     const spaceAddress = (parseInt(baseAddress, 16) - 0x950).toString(16);
 
     spaceLocker = setInterval(function() {
-        h5gg.setValue('0x' + spaceAddress, 0, 'F64');
+        h5gg.setValue('0x' + spaceAddress, 7.5, 'F64');
     }, 1);
 }
     const titlebar = document.getElementById('titlebar');
